@@ -26,11 +26,11 @@ from typing import Optional
 
 from dotenv import load_dotenv
 
+load_dotenv()
+
 from transcribe import transcribe, segments_to_text_with_timestamps
 from select_moments import select_moments
 from clip_utils import cut_clip, build_srt_for_clip
-
-load_dotenv()
 
 
 def validate_input(video_path: str) -> bool:

@@ -40,3 +40,14 @@ clips_*/
 *.srt
 transcript.json
 clips_selected.json
+
+# Video formats
+.mov
+.mp4
+.avi
+.mkv
+.flv
+.wmv
+.webm
+
+.DS_Store

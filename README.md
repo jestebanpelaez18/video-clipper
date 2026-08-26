@@ -4,6 +4,8 @@ Generates vertical clips for social media from long-form video (podcasts, interv
 automatically identifying the most relevant moments instead of relying on manual editing or
 generic auto-cut tools like CapCut's built-in AI.
 
+> Security note for public repos: do not commit real credentials. This project expects a local `.env` file and includes a safe `.env.example` template instead.
+
 ## How it works
 
 A 3-step pipeline:
@@ -50,9 +52,11 @@ python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 
-# 3. Your Anthropic API key (from console.anthropic.com, with credits loaded)
-#    This is NOT the same as a Claude.ai subscription — it's pay-per-use
-echo "ANTHROPIC_API_KEY=your_key_here" > .env
+# 3. Create a local .env file from the example template
+cp .env.example .env
+
+# Edit .env and add your Anthropic API key from console.anthropic.com
+# This is NOT the same as a Claude.ai subscription — it's pay-per-use
 ```
 
 ## Usage
@@ -63,7 +67,7 @@ python main.py video.mp4
 
 Generates a `clips_video/` folder with:
 - `transcript.json` — full transcription with timestamps
-- `clips_seleccionados.json` — which moments Claude selected and why
+- `clips_selected.json` — which moments Claude selected and why
 - `clip_1_funny.mp4`, `clip_2_important.mp4`, etc. — final clips, vertical with burned-in subtitles
 
 ## Notes

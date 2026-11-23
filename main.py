@@ -95,21 +95,21 @@ def process_video(video_path: str, output_dir: str, max_clips: int = 8) -> bool:
 
         clips_data_path = os.path.join(output_dir, "clips_selected.json")
         with open(clips_data_path, "w", encoding="utf-8") as f:
-            json.dump(clips, f, ensure_ascii=False, indent=2)
+            json.dump([clip.model_dump() for clip in clips], f, ensure_ascii=False, indent=2)
         print(f"  ✓ {len(clips)} moments selected and saved to {clips_data_path}")
 
         print("\n  Selected moments:")
         for i, clip in enumerate(clips, start=1):
-            duration = clip["end"] - clip["start"]
-            print(f"    {i}. [{clip['start']:.1f}s - {clip['end']:.1f}s] "
-                  f"({duration:.0f}s) | {clip['category']} | {clip['reason']}")
+            duration = clip.end - clip.start
+            print(f"    {i}. [{clip.start:.1f}s - {clip.end:.1f}s] "
+                  f"({duration:.0f}s) | {clip.category} | {clip.reason}")
 
         # Step 3: Cut clips
         print(f"\nStep 3/3: Cutting {len(clips)} clips with subtitles...")
         for i, clip in enumerate(clips, start=1):
-            start, end = clip["start"], clip["end"]
+            start, end = clip.start, clip.end
             srt_path = os.path.join(output_dir, f"clip_{i}.srt")
-            output_path = os.path.join(output_dir, f"clip_{i}_{clip['category']}.mp4")
+            output_path = os.path.join(output_dir, f"clip_{i}_{clip.category}.mp4")
 
             build_srt_for_clip(segments, start, end, srt_path)
             cut_clip(video_path, start, end, output_path, srt_path=srt_path, vertical=True)
